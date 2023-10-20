@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <div class="card p-4 mx-auto mt-5" style="width: 600px;">
+      <h1 class="m-0 mb-3">Separar libro</h1>
+      <!-- Se carga la biblioteca Crispy Forms para dar formato al formulario -->
+      <form method="post" action="{% url 'update' id=prestamo.idprestamo %}">
+
+        {% csrf_token %}
+        <!-- 'formAlumno' variable del form de django y '|crispy' para darle el formato -->
+        <div id="div_id_idlibro" class="form-group"> 
+          <label for="id_idlibro" class=" requiredField">
+            Idlibro<span class="asteriskField">*</span> 
+          </label> 
+          <div> 
+            <select name="idlibro" class="select form-control" required="" id="id_idlibro"> 
+              <option value="{{prestamo.idlibro.idlibro}}" selected="">{{prestamo.idlibro.titulo}}</option>               
+              {% for libro in libros %}
+                {% if libro.idlibro != prestamo.idlibro.idlibro %}
+                  <option value="{{libro.idlibro}}">{{libro.idlibro.titulo}}</option> 
+                {% endif %}
+              {% endfor %}
+            </select> 
+          </div> 
+        </div> 
+        <div id="div_id_idusuario" class="form-group"> 
+          <label for="id_idusuario" class=" requiredField">
+            Idusuario<span class="asteriskField">*</span> 
+          </label> 
+          <div> 
+            <select name="idusuario" class="select form-control" required="" id="id_idusuario"> 
+              <option value="{{prestamo.idusuario.idusuario}}" selected="">{{prestamo.idusuario.nombre}}</option>               
+              {% for usuario in usuarios %}
+                {% if usuario.idusuario != prestamo.idusuario.idusuario %}
+                  <option value="{{usuario.idusuario}}">{{usuario.nombre}}</option> 
+                {% endif %}
+              {% endfor %}
+            </select> 
+          </div> 
+        </div> 
+        <div id="div_id_fecprestamo" class="form-group"> 
+          <label for="id_fecprestamo" class="">Fecprestamo</label> 
+          <div> 
+            <input type="datetime" name="fecprestamo" value="{{prestamo.fecprestamo|date:"Y-m-d H:i:s"}}" 
+              class="datetimeinput form-control" id="id_fecprestamo"> 
+          </div> 
+        </div> 
+        <div id="div_id_fecdevolucion" class="form-group"> 
+          <label for="id_fecdevolucion" class="">Fecdevolucion</label> 
+          <div> 
+            <input type="datetime" name="fecdevolucion" value="{{prestamo.fecdevolucion|date:"Y-m-d H:i:s"}}"
+             class="datetimeinput form-control" id="id_fecdevolucion"> 
+          </div> 
+        </div>
+    
+        <button type="submit" class="btn btn-primary mt-4">Guardar</button>
+      </form>  
+    </div>
+  </div>
+</body>
+</html>
+
+
+
